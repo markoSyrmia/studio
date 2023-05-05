@@ -360,6 +360,15 @@ export function ImageView({ context }: Props): JSX.Element {
             rotation: ((oldConfig.rotation ?? 0) + 90) % 360,
           })),
       },
+      {
+        type: "item",
+        label: "ShowId",
+        onclick: () =>
+          setConfig((oldConfig) => ({
+            ...oldConfig,
+            isIdShowen: oldConfig.isIdShowen ?? false,
+          })),
+      },
     ],
     [doDownloadImage],
   );
@@ -447,4 +456,5 @@ export const defaultConfig: Config = {
   synchronize: false,
   transformMarkers: false,
   zoom: 1,
+  isIdShowen: false,
 };

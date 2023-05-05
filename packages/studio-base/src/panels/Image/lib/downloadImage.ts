@@ -21,6 +21,7 @@ export async function downloadImage(
     geometry: {
       flipHorizontal: config.flipHorizontal ?? false,
       flipVertical: config.flipVertical ?? false,
+      isIdShowen: config.isIdShowen ?? false,
       panZoom: { x: 0, y: 0, scale: 1 },
       rotation: config.rotation ?? 0,
       viewport: { width: 1, height: 1 }, // We'll just use the intrinsic image dimensions.

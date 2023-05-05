@@ -44,6 +44,7 @@ export const MarkersWithHitmap: StoryObj = {
         geometry: {
           flipHorizontal: false,
           flipVertical: false,
+          isIdShowen: false,
           panZoom: { x: 0, y: 0, scale: 1 },
           rotation: 0,
           viewport: { width, height },
@@ -100,6 +101,7 @@ export const MarkersWithRotations: StoryObj = {
           geometry: {
             flipHorizontal: false,
             flipVertical: false,
+            isIdShowen: false,
             panZoom: { x: 0, y: 0, scale: 1 },
             rotation: 0,
             viewport: { width, height },
@@ -152,6 +154,7 @@ export const FoxgloveAnnotations: StoryObj = {
         geometry: {
           flipHorizontal: false,
           flipVertical: false,
+          isIdShowen: false,
           panZoom: { x: 0, y: 0, scale: 1 },
           rotation: 0,
           viewport: { width, height },

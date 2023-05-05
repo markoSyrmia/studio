@@ -26,6 +26,7 @@ export type Config = DefaultConfig & {
   transformMarkers: boolean;
   zoom?: number;
   zoomPercentage?: number;
+  isIdShowen?: boolean;
 };
 
 export type UseImagePanelMessagesParams = {
@@ -82,6 +83,7 @@ export type RenderGeometry = {
   rotation: number;
   viewport: Dimensions;
   zoomMode: ZoomMode;
+  isIdShowen: boolean;
 };
 
 export type RenderArgs = {
@@ -118,6 +120,7 @@ export type CircleAnnotation = {
   radius: number;
   thickness: number;
   position: Point2D;
+  object_id?: string;
 };
 
 export type PointsAnnotation = {
@@ -129,13 +132,14 @@ export type PointsAnnotation = {
   outlineColor?: Color;
   thickness: number;
   fillColor?: Color;
+  object_id?: string;
 };
 
 export type TextAnnotation = {
   type: "text";
   stamp: Time;
   position: Point2D;
-  text: string;
+  text: string | undefined;
   textColor: Color;
   backgroundColor?: Color;
   fontSize: number;

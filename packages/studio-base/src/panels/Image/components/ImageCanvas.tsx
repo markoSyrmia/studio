@@ -271,6 +271,7 @@ export function ImageCanvas(props: Props): JSX.Element {
         geometry: {
           flipHorizontal: config.flipHorizontal ?? false,
           flipVertical: config.flipVertical ?? false,
+          isIdShowen: config.isIdShowen ?? false,
           panZoom: computedViewbox,
           rotation: config.rotation ?? 0,
           viewport: { width: targetWidth, height: targetHeight },
@@ -287,6 +288,7 @@ export function ImageCanvas(props: Props): JSX.Element {
     canvas,
     config.flipHorizontal,
     config.flipVertical,
+    config.isIdShowen,
     config.rotation,
     devicePixelRatio,
     doRenderImage,

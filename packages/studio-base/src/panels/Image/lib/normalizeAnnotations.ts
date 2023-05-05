@@ -80,6 +80,7 @@ function normalizeFoxgloveImageAnnotations(
       radius: circle.diameter / 2.0,
       thickness: circle.thickness,
       position: circle.position,
+      object_id: circle.object_id,
     });
   }
   for (const point of message.points ?? []) {
@@ -97,6 +98,7 @@ function normalizeFoxgloveImageAnnotations(
       outlineColor: mightActuallyBePartial(point).outline_color ?? { r: 1, g: 1, b: 1, a: 1 },
       thickness: mightActuallyBePartial(point).thickness ?? 1,
       fillColor: point.fill_color,
+      object_id: point.object_id,
     });
   }
   for (const text of message.texts ?? []) {

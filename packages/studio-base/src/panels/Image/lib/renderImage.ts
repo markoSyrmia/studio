@@ -268,7 +268,7 @@ function render({
   const transform = ctx.getTransform();
 
   try {
-    paintMarkers(ctx, markers, cameraModel, geometry.panZoom);
+    paintMarkers(ctx, markers, cameraModel, geometry.panZoom, geometry.isIdShowen);
   } catch (err) {
     console.warn("error painting markers:", err);
   } finally {
@@ -283,6 +283,7 @@ function paintMarkers(
   annotations: readonly Annotation[],
   cameraModel: PinholeCameraModel | undefined,
   panZoom: PanZoom,
+  isIdShowen: boolean,
 ) {
   for (const annotation of annotations) {
     ctx.save();
@@ -291,10 +292,10 @@ function paintMarkers(
 
       switch (annotation.type) {
         case "circle":
-          paintCircleAnnotation(ctx, annotation, cameraModel);
+          paintCircleAnnotation(ctx, annotation, cameraModel, isIdShowen);
           break;
         case "points":
-          paintPointsAnnotation(ctx, annotation, cameraModel, panZoom);
+          paintPointsAnnotation(ctx, annotation, cameraModel, panZoom, isIdShowen);
           break;
         case "text":
           paintTextAnnotation(ctx, annotation, cameraModel);
@@ -364,6 +365,7 @@ function paintCircleAnnotation(
   ctx: HitmapRenderContext,
   annotation: CircleAnnotation,
   cameraModel: PinholeCameraModel | undefined,
+  isIdShowen: boolean,
 ) {
   const { fillColor, outlineColor, radius, thickness, position } = annotation;
 
@@ -389,6 +391,22 @@ function paintCircleAnnotation(
     ctx.strokeStyle = toRGBA(outlineColor);
     ctx.stroke();
   }
+  if (isIdShowen) {
+    paintTextAnnotation(
+      ctx,
+      {
+        type: "text",
+        stamp: annotation.stamp,
+        position: { x, y },
+        text: annotation.object_id,
+        textColor: { r: 0, g: 0, b: 0, a: 1 },
+        backgroundColor: { r: 1, g: 1, b: 1, a: 1 },
+        fontSize: 10,
+        padding: 10,
+      },
+      cameraModel,
+    );
+  }
 }
 
 function paintPointsAnnotation(
@@ -396,9 +414,27 @@ function paintPointsAnnotation(
   annotation: PointsAnnotation,
   cameraModel: PinholeCameraModel | undefined,
   panZoom: PanZoom,
+  isIdShowen: boolean,
 ) {
   switch (annotation.style) {
     case "points": {
+      const { x, y } = maybeUnrectifyPixel(cameraModel, annotation.points[0]!);
+      if (isIdShowen) {
+        paintTextAnnotation(
+          ctx,
+          {
+            type: "text",
+            stamp: annotation.stamp,
+            position: { x, y },
+            text: annotation.object_id,
+            textColor: { r: 0, g: 0, b: 0, a: 1 },
+            backgroundColor: { r: 1, g: 1, b: 1, a: 1 },
+            fontSize: 10,
+            padding: 10,
+          },
+          cameraModel,
+        );
+      }
       for (let i = 0; i < annotation.points.length; i++) {
         const point = annotation.points[i]!;
         // This is not a typo. ImageMarker has an array for outline_colors but
@@ -462,6 +498,22 @@ function paintPointsAnnotation(
         ctx.strokeStyle = toRGBA(annotation.outlineColor);
         ctx.lineWidth = annotation.thickness;
         ctx.stroke();
+      }
+      if (isIdShowen) {
+        paintTextAnnotation(
+          ctx,
+          {
+            type: "text",
+            stamp: annotation.stamp,
+            position: { x, y },
+            text: annotation.object_id,
+            textColor: { r: 0, g: 0, b: 0, a: 1 },
+            backgroundColor: { r: 1, g: 1, b: 1, a: 1 },
+            fontSize: 10,
+            padding: 10,
+          },
+          cameraModel,
+        );
       }
       break;
     }

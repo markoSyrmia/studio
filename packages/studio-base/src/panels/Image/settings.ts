@@ -83,6 +83,11 @@ export function buildSettingsTree({
           label: "Flip vertical",
           value: config.flipVertical ?? false,
         },
+        isIdShowen: {
+          input: "boolean",
+          label: "Show id",
+          value: config.isIdShowen ?? false,
+        },
         rotation: {
           input: "select",
           label: "Rotation",
